@@ -8,24 +8,13 @@ public class Solution1 {
 
         List<String> suspendedUser = new ArrayList<>();
         Set<String> set = new HashSet<>(Arrays.asList(report));
-        Map<String, List<String>> map = new HashMap<>();
         int[] answer = new int[id_list.length];
 
-        //누가 누구를 신고했고 신고당했는지 map을 구한다.
-        for (String value : id_list) {
-            map.put(value, new ArrayList<>());
-        }
-
-        for (String s : set) {
-            String[] str = s.split(" ");
-            String from = str[0];
-            String to = str[1];
-            map.get(to).add(from);
-        }
+        Map<String, List<String>> accusedAndAccuserMapping = getAccusedAndAccuserMapping(id_list, set);
 
         //누가 정지를 당했는지 구한다.
         for (String s : id_list) {
-            if (map.get(s).size() >= k) {
+            if (accusedAndAccuserMapping.get(s).size() >= k) {
                 suspendedUser.add(s);
             }
         }
@@ -42,5 +31,23 @@ public class Solution1 {
         }
 
         return answer;
+    }
+
+    private static Map<String, List<String>> getAccusedAndAccuserMapping(String[] id_list, Set<String> set) {
+
+        Map<String, List<String>> map = new HashMap<>();
+        //누가 누구를 신고했고 신고당했는지 map을 구한다.
+        for (String id : id_list) {
+            map.put(id, new ArrayList<>());
+        }
+
+        for (String s : set) {
+            String[] str = s.split(" ");
+            String from = str[0];
+            String to = str[1];
+            map.get(to).add(from);
+        }
+
+        return map;
     }
 }
