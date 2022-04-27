@@ -46,7 +46,6 @@ public class Solution2 {
 				new_id = new_id + c + "";
 			}
 		}
-
 		return new_id;
 	}
 	
