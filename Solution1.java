@@ -6,14 +6,14 @@ public class Solution1 {
 
     public static int[] solution(String[] id_list, String[] report, int k) {
 
-        ArrayList<String> suspendedUser = new ArrayList<>();
-        HashSet<String> set = new HashSet(Arrays.asList(report));
-        HashMap<String, List<String>> map = new HashMap<>();
+        List<String> suspendedUser = new ArrayList<>();
+        Set<String> set = new HashSet<>(Arrays.asList(report));
+        Map<String, List<String>> map = new HashMap<>();
         int[] answer = new int[id_list.length];
 
         //누가 누구를 신고했고 신고당했는지 map을 구한다.
         for (int i = 0; i < id_list.length; i++) {
-            map.put(id_list[i], new ArrayList<String>());
+            map.put(id_list[i], new ArrayList<>());
         }
 
         for (String s : set) {
