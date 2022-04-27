@@ -1,23 +1,18 @@
 package level1;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution1 {
 
     public static int[] solution(String[] id_list, String[] report, int k) {
 
-        List<String> suspendedUser = new ArrayList<>();
         Set<String> set = new HashSet<>(Arrays.asList(report));
         int[] answer = new int[id_list.length];
 
         Map<String, List<String>> accusedAndAccuserMapping = getAccusedAndAccuserMapping(id_list, set);
 
-        //누가 정지를 당했는지 구한다.
-        for (String s : id_list) {
-            if (accusedAndAccuserMapping.get(s).size() >= k) {
-                suspendedUser.add(s);
-            }
-        }
+        List<String> suspendedUser = Arrays.stream(id_list).filter(id -> accusedAndAccuserMapping.get(id).size() >= k ).collect(Collectors.toList());
 
 
 //		이메일 받은 횟수를 구한다.
