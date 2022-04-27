@@ -14,67 +14,45 @@ public class Solution1 {
 	
 	public static int[] solution(String[] id_list, String[] report, int k) {
 		
-		ArrayList list2 = new ArrayList<>();
+		ArrayList<String> suspendedUser = new ArrayList<>();
 		HashSet set = new HashSet(Arrays.asList(report));
 		HashMap<String , List<String>> map = new HashMap<>();
 		int [] answer = new int[id_list.length];
 		
-		//누가 누구를 신고했는지 짝지워준다
+		//누가 유저를 신고했는지 묶어준다.
 		for(int i=0; i < id_list.length ; i++) {
 			
-			ArrayList list1 = new ArrayList<>();
+			ArrayList Accuser = new ArrayList<>();
 			
 			Iterator<String> it = set.iterator();
 			while(it.hasNext()) {
 				String[] a = it.next().split(" ");
-				if(id_list[i].equals(a[0])) 
-					list1.add(a[1]);
+				if(id_list[i].equals(a[1])) 
+					Accuser.add(a[0]);
 			}
-			map.put(id_list[i], list1);
+			map.put(id_list[i], Accuser);
 		}
 		
-		for(int i = 0; i < id_list.length ; i++) {
-			int count = 0;
-			
-			Iterator<String> it = set.iterator();
-			while(it.hasNext()) {
-				String[] a = it.next().split(" ");
-				if(id_list[i].equals(a[1])) {
-					count++;
-				}
-			}
-			
-			if(count >= k) {
-				list2.add(id_list[i]);
+		//누가 정지를 당했는지 구한다.
+		for(int i=0; i < id_list.length ; i++) {
+			 
+			if(map.get(id_list[i]).size() >= k) {
+				suspendedUser.add(id_list[i]);
 			}
 		}
 		
-		for(int i =0; i < id_list.length ; i++) {
-			
+		//이메일 보내기
+		for(int i=0; i < id_list.length ; i++) {
 			int count = 0;
-			List list = map.get(id_list[i]);
-			for(int j = 0; j < list.size() ; j++) {
-				Iterator<String> it = list2.iterator();
-				while(it.hasNext()){
-					if(list.get(j).equals(it.next())) {
-						count++;
-					}
-				}
+			
+			for(String a : suspendedUser) {
+				String b = id_list[i] + " " + a;
+				if(set.contains(b))
+				count++;
 			}
 			
 			answer[i] = count;
-			
 		}
+		
 		return answer;
 	}
-	 
-	public static void main(String[] args) {
-		String[] report = {"ryan con", "ryan con", "ryan con", "ryan con"};
-		String[] id_list = {"con", "ryan"};
-
-		int[] sol = solution(id_list, report, 2);
-		
-		System.out.println(Arrays.toString(sol));
-	
-		}
-}
