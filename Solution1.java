@@ -19,7 +19,7 @@ public class Solution1 {
 		HashMap<String , List<String>> map = new HashMap<>();
 		int [] answer = new int[id_list.length];
 		
-		//´©°¡ ´©±¸¸¦ ½Å°íÇß´ÂÁö Â¦Áö¿öÁØ´Ù
+		//ëˆ„ê°€ ëˆ„êµ¬ë¥¼ ì‹ ê³ í–ˆëŠ”ì§€ ì§ì§€ì›Œì¤€ë‹¤
 		for(int i=0; i < id_list.length ; i++) {
 			
 			ArrayList list1 = new ArrayList<>();
@@ -65,8 +65,6 @@ public class Solution1 {
 			answer[i] = count;
 			
 		}
-	
-		
 		return answer;
 	}
 	 
