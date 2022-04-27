@@ -10,30 +10,26 @@ import java.util.Map;
 import java.util.Set;
 
 public class Solution1 {
-
 	
 	public static int[] solution(String[] id_list, String[] report, int k) {
 		
 		ArrayList<String> suspendedUser = new ArrayList<>();
-		HashSet set = new HashSet(Arrays.asList(report));
+		HashSet<String> set = new HashSet(Arrays.asList(report));
 		HashMap<String , List<String>> map = new HashMap<>();
 		int [] answer = new int[id_list.length];
 		
-		//누가 유저를 신고했는지 묶어준다.
+        //누가 누구를 신고했고 신고당했는지 map을 구한다.
 		for(int i=0; i < id_list.length ; i++) {
-			
-			ArrayList Accuser = new ArrayList<>();
-			
-			Iterator<String> it = set.iterator();
-			while(it.hasNext()) {
-				String[] a = it.next().split(" ");
-				if(id_list[i].equals(a[1])) 
-					Accuser.add(a[0]);
-			}
-			
-			map.put(id_list[i], Accuser);
+			map.put(id_list[i], new ArrayList<String>());
 		}
 		
+		for(String s : set) {
+			String[] str = s.split(" ");
+			String from = str[0];
+			String to = str[1];
+			map.get(to).add(from);
+		}
+
 		//누가 정지를 당했는지 구한다.
 		for(int i=0; i < id_list.length ; i++) {
 			 
@@ -42,17 +38,15 @@ public class Solution1 {
 			}
 		}
 		
-		//이메일 보내기
+		
+//		이메일 받은 횟수를 구한다.
 		for(int i=0; i < id_list.length ; i++) {
-			int count = 0;
 			
 			for(String a : suspendedUser) {
 				String b = id_list[i] + " " + a;
 				if(set.contains(b))
-				count++;
+					answer[i]++;
 			}
-			
-			answer[i] = count;
 		}
 		
 		return answer;
