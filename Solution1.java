@@ -12,8 +12,8 @@ public class Solution1 {
         int[] answer = new int[id_list.length];
 
         //누가 누구를 신고했고 신고당했는지 map을 구한다.
-        for (int i = 0; i < id_list.length; i++) {
-            map.put(id_list[i], new ArrayList<>());
+        for (String value : id_list) {
+            map.put(value, new ArrayList<>());
         }
 
         for (String s : set) {
@@ -24,10 +24,9 @@ public class Solution1 {
         }
 
         //누가 정지를 당했는지 구한다.
-        for (int i = 0; i < id_list.length; i++) {
-
-            if (map.get(id_list[i]).size() >= k) {
-                suspendedUser.add(id_list[i]);
+        for (String s : id_list) {
+            if (map.get(s).size() >= k) {
+                suspendedUser.add(s);
             }
         }
 
