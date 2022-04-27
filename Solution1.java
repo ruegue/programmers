@@ -30,6 +30,7 @@ public class Solution1 {
 				if(id_list[i].equals(a[1])) 
 					Accuser.add(a[0]);
 			}
+			
 			map.put(id_list[i], Accuser);
 		}
 		
