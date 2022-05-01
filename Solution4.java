@@ -1,5 +1,6 @@
 package level1;
 
+//encoding이 utf-8이 아니네요. 혹시 4번부터 다른 환경에서 푸셨나요?
 public class Solution4 {
 	
 	public static String solution(int[] number,String hand) {
@@ -14,17 +15,16 @@ public class Solution4 {
 		for(int i =0; i < number.length ; i++) {
 		
 		//왼쪽 숫자가 나왔을때
-		if(LeftNumber.contains(number[i] + "")) {
+		if(LeftNumber.contains(number[i] + "")) { // int -> string을 하기 위해서 string과 더하는 것은 ng입니다. use Integer.parseInt()
 			//왼쪽 손가락 위치를 수정합니다.
-			location[0] = location[0].replace(location[0], number[i] + "");
-			answer = answer + "L";
+			// 이 두줄은 밑에서도 반복되네요. 왼손 엄지를 쓰는 동작과 오른쪽 엄지를 쓰는 동작은 추상화 할 수 있을 것 같습니다.
+			answer = moveLeftThumb(answer, location, number[i]);
 		}	
 		
 		//오른쪽 숫자가 나왔을때
 		if(RightNumber.contains(number[i] + "")) {
 			//오른쪽 손가락 위치를 수정합니다
-			location[1] = location[1].replace(location[1], number[i] + "");
-			answer = answer + "R";
+			answer = moveRightThumb(answer, location, number[i]);
 		}
 		
 		
@@ -56,6 +56,7 @@ public class Solution4 {
 			
 			//각 거리에 따른 결과
 			if(distanseL > distanseR) {
+				//이제 이 밑으로 좌측 우측 엄지 움직이는 것에 대해서 생각할 것 없이 추상화한 함수를 호출하면 됩니다.
 				location[1] = location[1].replace(location[1], number[i] + "");
 				answer = answer + "R";
 			}
@@ -80,7 +81,19 @@ public class Solution4 {
 	}
 		return answer;	
 	
-}	
+}
+
+	private static String moveRightThumb(String answer, String[] location, int number) {
+		location[1] = location[1].replace(location[1], number + "");
+		answer = answer + "R";
+		return answer;
+	}
+
+	private static String moveLeftThumb(String answer, String[] location, int number) {
+		location[0] = location[0].replace(location[0], number + "");
+		answer = answer + "L";
+		return answer;
+	}
 
 	public static void main(String[] args) {
 		int[] number = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0};

@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Solution3 {
 	
 	public static int solution(String s) {
-		
+		//good!
 		s = s.replace("zero", "0");
 		s  = s.replace("one", "1");
 		s = s.replace("two", "2");
