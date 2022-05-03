@@ -8,23 +8,27 @@ public class Solution11 {
 	public static String solution(String[] paticipant, String[] completion) {
 		String answer ="";
 		
-		for(int i = 0; i < paticipant.length ; i++) {
-			for(int j =0; j < completion.length ; j++) {
-				if(paticipant[i]=="")
-					break;
-				if(completion[j]=="")
-					continue;
-	
-				if(paticipant[i].equals(completion[j])) {
-					paticipant[i] = "";
-					completion[j] = "";
-				}
-			}
+		HashMap<String, Integer> map = new HashMap<>();
+		
+		
+		for(String a : participant) {
+			map.put(a, map.getOrDefault(a, 0)+1);
 		}
 		
-		for(int i=0; i < paticipant.length ; i++) {
-			if(paticipant[i]!="")
-				answer = paticipant[i];
+		
+		for(String a : completion) {
+			map.put(a, map.get(a)-1);
+		}
+		
+		
+		Iterator<Map.Entry<String, Integer>> iter = map.entrySet().iterator();
+		
+		while(iter.hasNext()) {
+			Map.Entry<String, Integer> entry = iter.next();
+			if(entry.getValue() != 0) {
+				answer = entry.getKey();
+				break;
+			}
 		}
 		
 		
